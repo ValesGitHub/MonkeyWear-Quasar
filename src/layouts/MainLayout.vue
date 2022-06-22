@@ -6,7 +6,7 @@
           flat
           dense
           round
-          icon="menu"
+          :icon="menuBtn"
           aria-label="Menu"
           @click="toggleLeftDrawer"
           v-show="$q.screen.lt.md"
@@ -17,16 +17,18 @@
           class="flex genders-head"
           v-show="$q.screen.md || $q.screen.lg || $q.screen.xl"
         >
-          <q-btn>DONNA</q-btn>
+          <q-btn :to="{ name: 'donna' }">DONNA</q-btn>
           <q-separator vertical inset color="white" />
-          <q-btn>UOMO</q-btn>
+          <q-btn :to="{ name: 'uomo' }">UOMO</q-btn>
         </div>
 
         <q-toolbar-title
           align="center"
           class="title-head cursor-pointer ellipsis-2-lines"
         >
-          {{ title }}
+          <route-link :to="{ name: 'uomo' }">
+            {{ title }}
+          </route-link>
         </q-toolbar-title>
 
         <!--ICONS-->
@@ -37,16 +39,6 @@
           <q-icon :name="shopIcon" class="cursor-pointer icon"></q-icon>
         </div>
       </q-toolbar>
-
-      <q-tabs
-        justify="between"
-        class="bg-grey-14 main-tabs"
-        v-if="$q.screen.gt.sm"
-      >
-        <q-route-tab to="/page1" label="Abbigliamento" class="col" />
-        <q-route-tab to="/page2" label="Scarpe" class="col" />
-        <q-route-tab to="/page3" label="Accessori" class="col" />
-      </q-tabs>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" overlay behavior="mobile" elevated>
@@ -73,11 +65,13 @@
 </template>
 
 <script setup lang="ts">
+//const and components
 import {
   matSearch,
   matFavorite,
   matPerson,
   matShoppingBag,
+  matMenu,
 } from '@quasar/extras/material-icons';
 import { defineComponent, ref } from 'vue';
 import EssentialLink from 'components/EssentialLink.vue';
@@ -103,6 +97,7 @@ let title = ref('MONKEY WEAR');
 const $q = useQuasar();
 
 //icons
+const menuBtn = matMenu;
 const searchIcon = matSearch;
 const heartIcon = matFavorite;
 const personIcon = matPerson;
@@ -116,6 +111,7 @@ defineComponent({
   },
 });
 
+//functions
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
@@ -134,9 +130,6 @@ function onResize(size: { height: number; width: number }) {
 </script>
 
 <style scoped>
-.main-tabs {
-  position: relative;
-}
 .title-head {
   font-size: 250%;
   font-weight: bold;
