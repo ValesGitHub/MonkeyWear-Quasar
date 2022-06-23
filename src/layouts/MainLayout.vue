@@ -22,13 +22,10 @@
           <q-btn :to="{ name: 'uomo' }">UOMO</q-btn>
         </div>
 
-        <q-toolbar-title
-          align="center"
-          class="title-head cursor-pointer ellipsis-2-lines"
-        >
-          <route-link :to="{ name: 'uomo' }">
+        <q-toolbar-title align="center" class="title-head ellipsis-2-lines">
+          <router-link :to="{ name: 'index' }" class="rout-link">
             {{ title }}
-          </route-link>
+          </router-link>
         </q-toolbar-title>
 
         <!--ICONS-->
@@ -131,6 +128,7 @@ function onResize(size: { height: number; width: number }) {
 
 <style scoped>
 .title-head {
+  user-select: none;
   font-size: 250%;
   font-weight: bold;
 }
@@ -147,6 +145,12 @@ function onResize(size: { height: number; width: number }) {
   padding: 10px;
   height: 25px;
   width: 25px;
+}
+
+.rout-link {
+  text-decoration: none;
+  color: inherit;
+  border: none;
 }
 
 @media only screen and (max-width: 700px) {

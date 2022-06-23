@@ -9,6 +9,7 @@ import { useQuasar } from 'quasar';
 
 const $q = useQuasar();
 
-$q.cookies.set('gender', 'F');
-console.log($q.cookies.get('gender'));
+if (!$q.cookies.get('gender') || $q.cookies.get('gender') === 'M') {
+  $q.cookies.set('gender', 'F');
+}
 </script>

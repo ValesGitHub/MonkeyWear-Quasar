@@ -7,6 +7,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
+        name: 'index',
         component: () => import('pages/IndexPage.vue'),
       },
       {
@@ -21,17 +22,29 @@ const routes: RouteRecordRaw[] = [
               {
                 path: 'abbigliamento',
                 name: 'abbigliamentoUomo',
-                component: () => import('pages/ManPage.vue'),
+                component: () => import('pages/CategoryProducts.vue'),
+                props: {
+                  gender: 'M',
+                  category: 'abbigliamento',
+                },
               },
               {
                 path: 'scarpe',
                 name: 'scarpeUomo',
-                component: () => import('pages/ManPage.vue'),
+                component: () => import('pages/CategoryProducts.vue'),
+                props: {
+                  gender: 'M',
+                  category: 'scarpe',
+                },
               },
               {
                 path: 'accessori',
                 name: 'accessoriUomo',
-                component: () => import('pages/ManPage.vue'),
+                component: () => import('pages/CategoryProducts.vue'),
+                props: {
+                  gender: 'M',
+                  category: 'accessori',
+                },
               },
             ],
           },
@@ -43,17 +56,29 @@ const routes: RouteRecordRaw[] = [
               {
                 path: 'abbigliamento',
                 name: 'abbigliamentoDonna',
-                component: () => import('pages/WomanPage.vue'),
+                component: () => import('pages/CategoryProducts.vue'),
+                props: {
+                  gender: 'F',
+                  category: 'abbigliamento',
+                },
               },
               {
                 path: 'scarpe',
                 name: 'scarpeDonna',
-                component: () => import('pages/WomanPage.vue'),
+                component: () => import('pages/CategoryProducts.vue'),
+                props: {
+                  gender: 'F',
+                  category: 'scarpe',
+                },
               },
               {
                 path: 'accessori',
                 name: 'accessoriDonna',
-                component: () => import('pages/WomanPage.vue'),
+                component: () => import('pages/CategoryProducts.vue'),
+                props: {
+                  gender: 'F',
+                  category: 'accessori',
+                },
               },
             ],
           },
