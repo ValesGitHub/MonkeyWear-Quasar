@@ -1,8 +1,20 @@
 <template>
   <q-page>
-    <h1>Ciao</h1>
-    {{ gender }}
-    {{ currentCategory }}
+    <div
+      v-if="showProducts"
+      class="flex wrap justify-center q-mt-xl"
+      ref="proWrapper"
+    >
+      <product-card
+        v-for="product in products"
+        :key="product.id"
+        :image="product.url"
+        :description="product.description"
+        :price="product.price"
+        class="q-ma-md"
+      ></product-card>
+    </div>
+    <q-spinner class="spin" size="50px" v-if="isLoading"></q-spinner>
   </q-page>
 </template>
 
@@ -10,6 +22,14 @@
 import { computed, defineComponent, ref, watch } from 'vue';
 import { defineProps } from 'vue';
 import { useRoute } from 'vue-router';
+import { getProducts } from '../api/productsApi';
+import ProductCard from '../components/ProductCard.vue';
+
+import {
+  Product,
+  AvailableGenders,
+  AvailableProductCategories,
+} from '../components/models';
 
 defineComponent({
   name: 'CategoryProducts',
@@ -19,17 +39,24 @@ const route = useRoute();
 
 const props = defineProps({
   gender: {
-    type: String,
+    type: String as () => AvailableGenders,
     required: true,
   },
 });
+const proWrapper = ref();
+const showProducts = ref(false);
 const isLoading = ref(true);
 const showError = ref(false);
-const products = ref([]);
-const currentCategory = computed(() => route.params.categoryName);
+const products = ref<Product[]>([]);
+type tipo = AvailableProductCategories;
+const currentCategory = computed(() => route.params.categoryName as tipo);
 
 async function fetchData() {
   isLoading.value = true;
+  if (proWrapper.value) {
+    proWrapper.value.style.opacity = '0.5';
+  }
+
   try {
     const { result, products: newProducts } = await getProducts(
       props.gender,
@@ -38,12 +65,15 @@ async function fetchData() {
 
     if (result.success) {
       products.value = newProducts;
+      showProducts.value = true;
+      console.log(products.value);
     } else {
       products.value = [];
       showError.value = true;
     }
 
     isLoading.value = false;
+    proWrapper.value.style.opacity = '1';
   } catch (e) {
     // Gestisci errore connessione
   }
@@ -57,3 +87,14 @@ watch(
   { immediate: true }
 );
 </script>
+
+<style>
+.products-wrapper {
+  opacity: 0.5;
+}
+.spin {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+}
+</style>

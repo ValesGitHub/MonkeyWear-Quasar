@@ -1,3 +1,4 @@
+import { AvailableGenders } from 'src/components/models';
 import { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
@@ -24,7 +25,7 @@ const routes: RouteRecordRaw[] = [
             // name: 'uomo',
             component: () => import('pages/CategoryProducts.vue'),
             props: {
-              gender: 'M',
+              gender: AvailableGenders.man,
             },
           },
           {
@@ -37,7 +38,7 @@ const routes: RouteRecordRaw[] = [
             // name: 'donna',
             component: () => import('pages/CategoryProducts.vue'),
             props: {
-              gender: 'D',
+              gender: AvailableGenders.woman,
             },
           },
         ],

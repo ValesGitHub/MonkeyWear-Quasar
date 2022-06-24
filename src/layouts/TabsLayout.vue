@@ -1,7 +1,11 @@
 <template>
   <q-layout view="hhh lpR fFf">
     <q-header elevated class="bg-grey-14 text-white">
-      <q-btn-group class="button-group" v-if="$q.screen.gt.sm">
+      <q-btn-group
+        class="button-group"
+        v-if="$q.screen.gt.sm"
+        :style="{ pointerEvents: pointer }"
+      >
         <q-btn
           class="col"
           :class="{ active: isActive }"
@@ -34,11 +38,16 @@ const TOTAL_CATEGORIES: string[] = ['abbigliamento', 'scarpe', 'accessori'];
 const $q = useQuasar();
 const router = useRouter();
 let isActive = ref(false);
+let pointer = ref('all');
 
 function getCategoryClick(category: string) {
+  pointer.value = 'none';
   const gender = $q.cookies.get('gender') === 'M' ? 'uomo' : 'donna';
   isActive.value = true;
   router.push(`/${gender}/${category}`);
+  setTimeout(() => {
+    pointer.value = 'all';
+  }, 2000);
 }
 </script>
 
