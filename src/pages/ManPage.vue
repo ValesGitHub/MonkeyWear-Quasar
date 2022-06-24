@@ -1,5 +1,7 @@
 <template>
-  <q-page class="row items-center justify-evenly"> UOMO</q-page>
+  <q-page class="row items-center justify-evenly">
+    <h1>UOMO</h1>
+  </q-page>
 </template>
 
 <script setup lang="ts">

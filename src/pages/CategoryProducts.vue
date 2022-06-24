@@ -12,6 +12,7 @@
         :description="product.description"
         :price="product.price"
         class="q-ma-md"
+        @favorite-click="toggleFavoriteState(product.id)"
       ></product-card>
     </div>
     <q-spinner class="spin" size="50px" v-if="isLoading"></q-spinner>
@@ -19,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+import { useFavoriteProducts } from 'src/composables/useFavoriteProducts';
 import { computed, defineComponent, ref, watch } from 'vue';
 import { defineProps } from 'vue';
 import { useRoute } from 'vue-router';
@@ -30,10 +32,9 @@ import {
   AvailableGenders,
   AvailableProductCategories,
 } from '../components/models';
+import { useQuasar } from 'quasar';
 
-defineComponent({
-  name: 'CategoryProducts',
-});
+const { favoriteArray, toggleFavoriteState } = useFavoriteProducts();
 
 const route = useRoute();
 
@@ -51,6 +52,8 @@ const products = ref<Product[]>([]);
 type tipo = AvailableProductCategories;
 const currentCategory = computed(() => route.params.categoryName as tipo);
 
+const $q = useQuasar();
+
 async function fetchData() {
   isLoading.value = true;
   if (proWrapper.value) {
@@ -66,7 +69,7 @@ async function fetchData() {
     if (result.success) {
       products.value = newProducts;
       showProducts.value = true;
-      console.log(products.value);
+      // console.log(products.value);
     } else {
       products.value = [];
       showError.value = true;

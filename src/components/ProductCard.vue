@@ -5,6 +5,7 @@
         :icon="heartIcon"
         round
         class="absolute like-button all-pointer-events"
+        @click="$emit('favoriteClick', 'id')"
       >
       </q-btn>
     </q-img>
@@ -36,6 +37,17 @@ const props = defineProps({
   price: {
     type: Number,
     require: true,
+  },
+});
+
+defineEmits({
+  favoriteClick: (id) => {
+    if (id) {
+      return true;
+    } else {
+      console.warn('Wrong Committed Id');
+      return false;
+    }
   },
 });
 
